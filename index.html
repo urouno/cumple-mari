@@ -12,6 +12,8 @@
        foto7.webp  foto8.webp  foto9.webp
      Todo en minúsculas, sin espacios ni acentos.
 
+     Si una foto falta, la tarjeta te lo va a decir en pantalla.
+
      PARA EDITAR TEXTOS: busca la palabra EDITA (aparece 2 veces).
      ========================================================== -->
 
@@ -41,7 +43,7 @@
     display:flex;
     align-items:center;
     justify-content:center;
-    padding:26px 20px calc(40px + env(safe-area-inset-bottom));
+    padding:24px 18px calc(38px + env(safe-area-inset-bottom));
     overflow:hidden;
     -webkit-tap-highlight-color:transparent;
     user-select:none;
@@ -49,97 +51,71 @@
 
   .capa{ position:fixed; inset:0; pointer-events:none; }
 
-  /* ---------- fondo de 24 ---------- */
-
+  /* fondo de 24: una sola imagen repetida (rápido) */
   #patron{
-    inset:-22%;
-    display:grid;
-    grid-template-columns:repeat(auto-fill, minmax(84px, 1fr));
-    align-content:start;
-    gap:6px 2px;
-    animation:deriva 34s linear infinite;
-  }
-  #patron span{
-    font-family:'Josefin Sans', sans-serif;
-    font-weight:200;
-    text-align:center;
-    color:var(--oro);
-    line-height:1;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150'><text x='16' y='42' font-family='Helvetica,Arial' font-size='30' fill='%23d3a75a' fill-opacity='.10'>24</text><text x='92' y='96' font-family='Helvetica,Arial' font-size='19' fill='%23d3a75a' fill-opacity='.07'>24</text><text x='40' y='132' font-family='Helvetica,Arial' font-size='24' fill='%23d3a75a' fill-opacity='.055'>24</text></svg>");
+    background-size:150px 150px;
+    animation:deriva 40s linear infinite;
   }
   @keyframes deriva{
-    from{ transform:translate3d(0,0,0); }
-    to  { transform:translate3d(-26px,-124px,0); }
+    from{ background-position:0 0; }
+    to  { background-position:-150px -300px; }
   }
 
-  .vineta{ background:radial-gradient(110% 80% at 50% 45%, transparent 34%, rgba(8,5,12,.86) 100%); }
+  .vineta{ background:radial-gradient(110% 80% at 50% 45%, transparent 34%, rgba(8,5,12,.85) 100%); }
 
-  .grano{
-    opacity:.05; mix-blend-mode:soft-light;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/></filter><rect width='180' height='180' filter='url(%23n)'/></svg>");
-  }
-
-  /* ---------- confeti ---------- */
-
+  /* confeti */
   #confeti{ z-index:9; }
   #confeti i{
-    position:absolute;
-    top:-14px;
-    width:7px; height:11px;
-    border-radius:1px;
+    position:absolute; top:-14px;
+    width:7px; height:11px; border-radius:1px;
     animation:caer linear forwards;
   }
   @keyframes caer{
-    from{ transform:translateY(-10vh) rotate(0deg); opacity:1; }
-    to  { transform:translateY(112vh) rotate(760deg); opacity:0; }
+    from{ transform:translate3d(0,-12vh,0) rotate(0deg); opacity:1; }
+    to  { transform:translate3d(0,112vh,0) rotate(700deg); opacity:0; }
   }
 
   /* ---------- escena ---------- */
 
   .escena{
     position:relative;
-    width:min(100%, 400px);
-    height:min(86dvh, 720px);
+    width:min(100%, 390px);
+    height:min(84dvh, 700px);
     z-index:2;
   }
 
-  /* ---------- portada / sobre ---------- */
+  /* ---------- portada ---------- */
 
   .sobre{
-    position:absolute; inset:0;
+    position:absolute; inset:0; z-index:200;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    gap:20px;
-    text-align:center;
+    gap:18px; text-align:center;
     cursor:pointer;
-    transition:opacity .7s ease, transform .7s cubic-bezier(.4,0,.2,1);
+    transition:opacity .6s ease, transform .6s cubic-bezier(.4,0,.2,1);
   }
-  .sobre.fuera{ opacity:0; transform:translateY(-26px) scale(.94); pointer-events:none; }
+  .sobre.fuera{ opacity:0; transform:translateY(-24px) scale(.94); pointer-events:none; }
 
   .sobre .numero{
     font-family:'Josefin Sans', sans-serif;
     font-weight:200;
-    font-size:clamp(120px, 42vw, 190px);
+    font-size:clamp(118px, 41vw, 185px);
     line-height:.8;
-    color:var(--crema);
     letter-spacing:-.04em;
-    text-shadow:0 0 62px rgba(211,167,90,.45);
+    text-shadow:0 0 60px rgba(211,167,90,.45);
   }
   .sobre .arriba{
     font-family:'Josefin Sans', sans-serif;
-    font-weight:300;
-    font-size:12px;
+    font-weight:300; font-size:12px;
     letter-spacing:.46em; text-indent:.46em;
     color:var(--oro);
   }
-  .sobre .nombre{
-    font-size:27px; font-style:italic;
-    color:var(--crema);
-  }
+  .sobre .nombre{ font-size:27px; font-style:italic; }
   .sobre .abrir{
-    margin-top:12px;
+    margin-top:10px;
     font-family:'Josefin Sans', sans-serif;
-    font-weight:300;
-    font-size:12px;
+    font-weight:300; font-size:12px;
     letter-spacing:.3em; text-indent:.3em;
     color:var(--tenue);
     border:1px solid rgba(211,167,90,.42);
@@ -149,7 +125,7 @@
   }
   @keyframes latir{
     0%,100%{ box-shadow:0 0 0 0 rgba(211,167,90,.32); }
-    60%    { box-shadow:0 0 0 16px rgba(211,167,90,0); }
+    60%    { box-shadow:0 0 0 15px rgba(211,167,90,0); }
   }
 
   /* ---------- baraja ---------- */
@@ -157,99 +133,99 @@
   .baraja{
     position:absolute; inset:0;
     opacity:0; pointer-events:none;
-    transition:opacity .8s ease .35s;
+    transition:opacity .6s ease .3s;
   }
   .baraja.dentro{ opacity:1; pointer-events:auto; }
 
   .carta{
     position:absolute;
     left:50%; top:50%;
-    width:min(88%, 320px);
-    margin-left:min(-44%, -160px);
+    width:min(86%, 310px);
     background:var(--crema);
     color:var(--tinta);
     border-radius:5px;
-    padding:13px 13px 20px;
-    box-shadow:0 26px 54px rgba(0,0,0,.62);
-    transition:transform .55s cubic-bezier(.3,.7,.3,1), opacity .45s ease;
+    padding:12px 12px 18px;
+    box-shadow:0 24px 50px rgba(0,0,0,.6);
+    transition:transform .5s cubic-bezier(.3,.7,.3,1), opacity .4s ease;
     cursor:pointer;
     will-change:transform;
   }
-  .carta img{
-    display:block; width:100%;
+  .carta .hueco{
+    position:relative;
+    width:100%;
     aspect-ratio:4/5;
-    object-fit:cover;
     border-radius:2px;
     background:#e6ddd0;
+    overflow:hidden;
   }
-  .carta p{
-    font-size:16.5px;
-    font-style:italic;
-    line-height:1.5;
+  .carta .hueco img{
+    display:block; width:100%; height:100%;
+    object-fit:cover;
+  }
+  .carta .aviso{
+    position:absolute; inset:0;
+    display:none;
+    align-items:center; justify-content:center;
     text-align:center;
-    padding:16px 6px 0;
+    font-family:'Josefin Sans', sans-serif;
+    font-size:12px; letter-spacing:.08em;
+    color:#9a6a5a; padding:22px;
+    background:#f2e6da;
+  }
+  .carta.sin-foto .aviso{ display:flex; }
+
+  .carta p{
+    font-size:16px; font-style:italic;
+    line-height:1.5; text-align:center;
+    padding:15px 6px 0;
     color:#3a2b40;
   }
   .carta .sello{
-    position:absolute; top:24px; right:24px;
+    position:absolute; top:22px; right:22px;
     font-family:'Josefin Sans', sans-serif;
-    font-weight:300;
-    font-size:10px;
+    font-weight:300; font-size:10px;
     letter-spacing:.28em; text-indent:.28em;
     color:var(--coral);
-    background:rgba(253,246,236,.92);
-    padding:5px 9px;
-    border-radius:2px;
-  }
-  .carta.volando{
-    transform:translate(-38vw, -12vh) rotate(-26deg) scale(.9) !important;
-    opacity:0;
+    background:rgba(253,246,236,.93);
+    padding:5px 9px; border-radius:2px;
   }
 
   /* ---------- cierre ---------- */
 
   .cierre{
-    position:absolute; inset:0;
+    position:absolute; inset:0; z-index:150;
     display:flex; flex-direction:column;
     align-items:center; justify-content:center;
-    gap:18px; text-align:center;
+    gap:16px; text-align:center;
     opacity:0; pointer-events:none;
-    transition:opacity .9s ease;
+    transition:opacity .8s ease;
   }
   .cierre.dentro{ opacity:1; pointer-events:auto; }
-  .cierre .grande{
-    font-size:clamp(34px, 9.5vw, 46px);
-    line-height:1.15;
-  }
+  .cierre .grande{ font-size:clamp(33px, 9.2vw, 45px); line-height:1.15; }
   .cierre .chico{
     font-size:17px; font-style:italic;
-    color:var(--tenue);
-    max-width:26ch; line-height:1.62;
+    color:var(--tenue); max-width:26ch; line-height:1.62;
   }
   .cierre .otra{
-    margin-top:10px;
+    margin-top:8px;
     font-family:'Josefin Sans', sans-serif;
     font-weight:300; font-size:11px;
     letter-spacing:.28em; text-indent:.28em;
     color:var(--oro);
     border:1px solid rgba(211,167,90,.4);
     border-radius:100px;
-    padding:12px 24px;
-    cursor:pointer;
+    padding:12px 24px; cursor:pointer;
   }
 
-  /* ---------- contador ---------- */
-
   .contador{
-    position:fixed;
-    left:0; right:0;
-    bottom:calc(20px + env(safe-area-inset-bottom));
+    position:fixed; left:0; right:0;
+    bottom:calc(18px + env(safe-area-inset-bottom));
     text-align:center;
     font-family:'Josefin Sans', sans-serif;
     font-weight:300; font-size:11px;
     letter-spacing:.3em; text-indent:.3em;
     color:var(--tenue);
-    opacity:0; transition:opacity .7s ease;
+    opacity:0; transition:opacity .6s ease;
     z-index:3; pointer-events:none;
   }
   .contador.dentro{ opacity:1; }
@@ -264,7 +240,6 @@
 
 <div class="capa" id="patron"></div>
 <div class="capa vineta"></div>
-<div class="capa grano"></div>
 <div class="capa" id="confeti"></div>
 
 <div class="escena">
@@ -291,7 +266,6 @@
 <script>
 /* ============================================================
    EDITA 1 — las cartas: foto + frase.
-   Cambia el orden o las frases como quieras.
    ============================================================ */
 
 const cartas = [
@@ -307,7 +281,7 @@ const cartas = [
 ];
 
 /* ============================================================
-   EDITA 2 — los textos de la portada y del final.
+   EDITA 2 — textos de portada y cierre.
    ============================================================ */
 
 const textos = {
@@ -329,84 +303,78 @@ document.getElementById("txtGrande").textContent = textos.grande;
 document.getElementById("txtChico").textContent  = textos.chico;
 document.getElementById("txtOtra").textContent   = textos.otra;
 
-/* fondo de 24 */
-(function(){
-  const p = document.getElementById("patron");
-  let h = "";
-  for (let n = 0; n < 260; n++){
-    const op = (Math.random() * .09 + .03).toFixed(3);
-    const tam = (Math.random() * 26 + 15).toFixed(0);
-    h += '<span style="opacity:' + op + ';font-size:' + tam + 'px">24</span>';
-  }
-  p.innerHTML = h;
-})();
-
-/* confeti */
 function confeti(){
   const c = document.getElementById("confeti");
   const colores = ["#d3a75a", "#e0674f", "#fdf6ec", "#b98ec4"];
   let h = "";
-  for (let n = 0; n < 46; n++){
-    h += '<i style="' +
-         'left:' + (Math.random()*100).toFixed(1) + '%;' +
-         'background:' + colores[Math.floor(Math.random()*colores.length)] + ';' +
-         'animation-duration:' + (2.6 + Math.random()*2.4).toFixed(2) + 's;' +
-         'animation-delay:' + (Math.random()*1.1).toFixed(2) + 's"></i>';
+  for (let n = 0; n < 34; n++){
+    h += '<i style="left:' + (Math.random()*100).toFixed(1) + '%;' +
+         'background:' + colores[n % colores.length] + ';' +
+         'animation-duration:' + (2.6 + Math.random()*2.2).toFixed(2) + 's;' +
+         'animation-delay:' + (Math.random()*1).toFixed(2) + 's"></i>';
   }
   c.innerHTML = h;
-  setTimeout(function(){ c.innerHTML = ""; }, 6200);
+  setTimeout(function(){ c.innerHTML = ""; }, 6000);
 }
 
-/* baraja */
-const baraja = document.getElementById("baraja");
+const baraja   = document.getElementById("baraja");
 const contador = document.getElementById("contador");
-const cierre = document.getElementById("cierre");
+const cierre   = document.getElementById("cierre");
+const sobre    = document.getElementById("sobre");
+
 let orden = [];
+let vistas = 0;
 let bloqueado = false;
 
 cartas.forEach(function(c, n){
   const el = document.createElement("div");
   el.className = "carta";
-  el.innerHTML = '<img src="' + c.archivo + '" alt="">' +
-                 '<p>' + c.frase + '</p>' +
-                 (n === 0 ? '<span class="sello">' + textos.sello + '</span>' : '');
+  el.innerHTML =
+    '<div class="hueco">' +
+      '<img alt="">' +
+      '<span class="aviso">no encuentro<br>' + c.archivo + '</span>' +
+    '</div>' +
+    '<p>' + c.frase + '</p>' +
+    (n === 0 ? '<span class="sello">' + textos.sello + '</span>' : '');
+
+  const img = el.querySelector("img");
+  img.addEventListener("error", function(){ el.classList.add("sin-foto"); });
+  img.src = c.archivo;
+
   el.addEventListener("click", pasar);
   baraja.appendChild(el);
   orden.push(el);
-  new Image().src = c.archivo;
 });
 
 function acomodar(){
+  const giros = [-3.4, 2.6, -1.8, 3.1, -2.4];
   orden.forEach(function(el, n){
-    const giro = [-3.5, 2.6, -1.8, 3.2, -2.4][n % 5];
-    const visible = n < 4;
     el.style.zIndex = 100 - n;
-    el.style.opacity = visible ? 1 : 0;
+    el.style.opacity = n < 4 ? 1 : 0;
     el.style.transform =
-      'translate(0, ' + (-50 + n * 1.6) + '%) ' +
-      'rotate(' + (n === 0 ? giro * .4 : giro) + 'deg) ' +
-      'scale(' + (1 - n * .035) + ')';
+      'translate(-50%, ' + (-50 + n * 1.5) + '%) ' +
+      'rotate(' + (n === 0 ? giros[n % 5] * .4 : giros[n % 5]) + 'deg) ' +
+      'scale(' + (1 - n * .034) + ')';
     el.style.pointerEvents = n === 0 ? "auto" : "none";
   });
-  contador.textContent = (cartas.length - restantes() + 1) + " / " + cartas.length;
+  contador.textContent = Math.min(vistas + 1, cartas.length) + " / " + cartas.length;
 }
-
-let vistas = 0;
-function restantes(){ return cartas.length - vistas; }
 
 function pasar(){
   if (bloqueado) return;
   bloqueado = true;
 
   const sale = orden.shift();
-  sale.classList.add("volando");
   const sello = sale.querySelector(".sello");
   if (sello) sello.remove();
 
+  sale.style.transform = 'translate(-138%, -62%) rotate(-24deg) scale(.9)';
+  sale.style.opacity = 0;
+
   vistas++;
+  acomodar();
 
   setTimeout(function(){
-    sale.classList.remove("volando");
     orden.push(sale);
     acomodar();
     bloqueado = false;
@@ -417,13 +385,11 @@ function pasar(){
       cierre.classList.add("dentro");
       confeti();
     }
-  }, 560);
-
-  acomodar();
+  }, 520);
 }
 
-document.getElementById("sobre").addEventListener("click", function(){
-  this.classList.add("fuera");
+sobre.addEventListener("click", function(){
+  sobre.classList.add("fuera");
   baraja.classList.add("dentro");
   contador.classList.add("dentro");
   confeti();
